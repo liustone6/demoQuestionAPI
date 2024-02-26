@@ -1,5 +1,7 @@
 package com.hellouniverse.demo.handler;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hellouniverse.demo.data.model.DemoEntity;
@@ -18,8 +20,20 @@ public class DemoHandler {
         return "Hello Universe!";
     }
 
-    public DemoEntity getEntityById(@NonNull final String id) {
+    public DemoEntity getEntityById(@NonNull final Long id) {
         return demoRepository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException(String.format("No Record found for id: %s", id)));
+    }
+
+    public List<DemoEntity> listEntities() {
+        return (List<DemoEntity>) demoRepository.findAll();
+    }
+
+    public DemoEntity saveEntity(@NonNull final DemoEntity entity) {
+        return demoRepository.save(entity);
+    }
+
+    public void deleteEntityById(@NonNull final Long entityId){
+        demoRepository.deleteById(entityId);
     }
 }
